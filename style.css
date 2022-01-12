@@ -1,0 +1,6 @@
+body{
+  position: fixed;
+  width: 100vh;
+  height: 100vh;
+  background-color: #212121;
+}
