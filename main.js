@@ -25,9 +25,37 @@ var gui = new GUI();
 const cubeFoler = gui.addFolder('CubesProperties');
 cubeFoler.add(properties, 'gradient',0.1,2).listen();
 //below two don't work yet.
-cubeFoler.add(properties, 'cubesCount', 0, 20).step(1);
+cubeFoler.add(properties, 'numberofcubes', 0, 20).step(1).listen().onChange(addnremove);
 cubeFoler.add(properties, 'length', 0,20);
 cubeFoler.open();
+
+// fucntion for adding and removing cubes. buggy. wip.
+function addnremove() {
+  if(previousnumberofcubes > properties.numberofcubes){
+   for(var i=properties.numberofcubes;i<previousnumberofcubes;i++){
+   scene.remove(cubeArray[i]);
+    
+   console.log(previousnumberofcubes - properties.numberofcubes);
+   }
+   cubeArray.splice(properties.numberofcubes,previousnumberofcubes - properties.numberofcubes);
+  }else if(previousnumberofcubes == properties.numberofcubes){
+    return;
+  }
+  else{
+    for(var i=previousnumberofcubes;i<properties.numberofcubes;i++){
+      console.log( properties.numberofcubes - previousnumberofcubes)
+      var mesh = new THREE.Mesh(cubegeo, cubematerial);
+      cubeArray.push(mesh);
+       scene.add(cubeArray[i-1]);
+       cubeArray[i].position.y += properties.gradient *i;
+       console.log("cube array length : " + cubeArray.length); 
+    }
+  }
+  console.log("previous number of cubes : " + previousnumberofcubes + ", current number of cubes : " + properties.numberofcubes);
+  
+  previousnumberofcubes = properties.numberofcubes;
+}
+
 
 // create cube mesh for all the cubes.
 const cubegeo = new THREE.BoxGeometry(1,0.2,1);
@@ -82,32 +110,3 @@ function animate() {
 }
 
 animate();
-
-
-
-// fucntion for adding and removing cubes. buggy. wip.
-// function addnremove() {
-//    if(previousnumberofcubes > properties.numberofcubes){
-//     for(var i=properties.numberofcubes;i<previousnumberofcubes;i++){
-//     scene.remove(cubeArray[i]);
-     
-//     console.log(previousnumberofcubes - properties.numberofcubes);
-//     }
-//     cubeArray.splice(properties.numberofcubes,previousnumberofcubes - properties.numberofcubes);
-//    }else if(previousnumberofcubes == properties.numberofcubes){
-//      return;
-//    }
-//    else{
-//      for(var i=previousnumberofcubes;i<properties.numberofcubes;i++){
-//        console.log( properties.numberofcubes - previousnumberofcubes)
-//        var mesh = new THREE.Mesh(cubegeo, cubematerial);
-//        cubeArray.push(mesh);
-//         scene.add(cubeArray[i-1]);
-//         cubeArray[i].position.y += properties.gradient *i;
-//         console.log("cube array length : " + cubeArray.length); 
-//      }
-//    }
-//    console.log("previous number of cubes : " + previousnumberofcubes + ", current number of cubes : " + properties.numberofcubes);
-   
-//    previousnumberofcubes = properties.numberofcubes;
-// }
