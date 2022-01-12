@@ -47,7 +47,7 @@ function addnremove() {
       var mesh = new THREE.Mesh(cubegeo, cubematerial);
       cubeArray.push(mesh);
        scene.add(cubeArray[i-1]);
-       cubeArray[i].position.y += properties.gradient *i;
+       cubeArray[i].position.y += 0.21 *i;
        console.log("cube array length : " + cubeArray.length); 
     }
   }
