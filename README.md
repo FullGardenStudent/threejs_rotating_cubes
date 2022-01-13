@@ -4,3 +4,5 @@
 - clone this repo
 - npm install
 - npm run dev
+
+demo : https://fullgardenstudent.github.io/threejs_rotating_cubes/
